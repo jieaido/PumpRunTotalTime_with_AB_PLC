@@ -93,6 +93,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dbPump.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pump1.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
