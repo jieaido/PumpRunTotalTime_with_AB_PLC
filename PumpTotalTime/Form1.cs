@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace PumpTotalTime
 {
@@ -14,6 +15,7 @@ namespace PumpTotalTime
         public Form1()
         {
             InitializeComponent();
+            
             
         }
 
@@ -34,7 +36,15 @@ namespace PumpTotalTime
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
+            
+               
 
+        }
+
+        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog  fd=new  OpenFileDialog();
+            fd.ShowDialog();
         }
     }
 }
