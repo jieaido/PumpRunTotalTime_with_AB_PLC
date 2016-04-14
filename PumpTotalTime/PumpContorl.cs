@@ -11,14 +11,31 @@ namespace PumpTotalTime
 {
     public partial class PumpContorl : UserControl
     {
+        public string PumpName { get; set; }
+        public string PumpId { get; set; }
+
+        public DateTime TotalRunTime { get; set; }  
+        public DateTime LastStartTime { get; set; } 
+
+
         public PumpContorl()
         {
             InitializeComponent();
         }
 
+        public PumpContorl(string pumpname, string pumpid, DateTime totalruntime, DateTime laststarttime)
+        {
+            PumpName = pumpname;
+            PumpId = pumpid;
+            TotalRunTime = totalruntime;
+            LastStartTime = laststarttime;
+        }
+        
+
         private void button1_Click(object sender, EventArgs e)
         {
-
+            
+            var s= LastStartTime - TotalRunTime;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

@@ -28,26 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pumpContorl1 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl2 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl3 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl4 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl5 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl6 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl7 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl8 = new PumpTotalTime.PumpContorl();
-            this.pumpContorl9 = new PumpTotalTime.PumpContorl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dbPumpDataSet = new PumpTotalTime.dbPumpDataSet();
+            this.floatTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.floatTableTableAdapter = new PumpTotalTime.dbPumpDataSetTableAdapters.FloatTableTableAdapter();
+            this.dateAndTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.millitmDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tagNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.markerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.DbPathLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dbPumpDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.floatTableBindingSource)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -76,15 +88,7 @@
             // 
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl1);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl2);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl3);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl4);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl5);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl6);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl7);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl8);
-            this.flowLayoutPanel1.Controls.Add(this.pumpContorl9);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -92,80 +96,9 @@
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
-            // pumpContorl1
-            // 
-            this.pumpContorl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl1.Location = new System.Drawing.Point(3, 3);
-            this.pumpContorl1.Name = "pumpContorl1";
-            this.pumpContorl1.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl1.TabIndex = 0;
-            // 
-            // pumpContorl2
-            // 
-            this.pumpContorl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl2.Location = new System.Drawing.Point(281, 3);
-            this.pumpContorl2.Name = "pumpContorl2";
-            this.pumpContorl2.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl2.TabIndex = 1;
-            // 
-            // pumpContorl3
-            // 
-            this.pumpContorl3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl3.Location = new System.Drawing.Point(559, 3);
-            this.pumpContorl3.Name = "pumpContorl3";
-            this.pumpContorl3.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl3.TabIndex = 2;
-            // 
-            // pumpContorl4
-            // 
-            this.pumpContorl4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl4.Location = new System.Drawing.Point(3, 171);
-            this.pumpContorl4.Name = "pumpContorl4";
-            this.pumpContorl4.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl4.TabIndex = 3;
-            // 
-            // pumpContorl5
-            // 
-            this.pumpContorl5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl5.Location = new System.Drawing.Point(281, 171);
-            this.pumpContorl5.Name = "pumpContorl5";
-            this.pumpContorl5.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl5.TabIndex = 4;
-            // 
-            // pumpContorl6
-            // 
-            this.pumpContorl6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl6.Location = new System.Drawing.Point(559, 171);
-            this.pumpContorl6.Name = "pumpContorl6";
-            this.pumpContorl6.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl6.TabIndex = 5;
-            // 
-            // pumpContorl7
-            // 
-            this.pumpContorl7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl7.Location = new System.Drawing.Point(3, 339);
-            this.pumpContorl7.Name = "pumpContorl7";
-            this.pumpContorl7.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl7.TabIndex = 6;
-            // 
-            // pumpContorl8
-            // 
-            this.pumpContorl8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl8.Location = new System.Drawing.Point(281, 339);
-            this.pumpContorl8.Name = "pumpContorl8";
-            this.pumpContorl8.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl8.TabIndex = 7;
-            // 
-            // pumpContorl9
-            // 
-            this.pumpContorl9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pumpContorl9.Location = new System.Drawing.Point(559, 339);
-            this.pumpContorl9.Name = "pumpContorl9";
-            this.pumpContorl9.Size = new System.Drawing.Size(272, 162);
-            this.pumpContorl9.TabIndex = 8;
-            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.dataGridView1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -200,6 +133,122 @@
             this.打开ToolStripMenuItem.Text = "打开";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "数据库文件(*.mdb)|*.mdb";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dateAndTimeDataGridViewTextBoxColumn,
+            this.millitmDataGridViewTextBoxColumn,
+            this.tagNameDataGridViewTextBoxColumn,
+            this.valDataGridViewTextBoxColumn,
+            this.statusDataGridViewTextBoxColumn,
+            this.markerDataGridViewTextBoxColumn});
+            this.dataGridView1.DataSource = this.floatTableBindingSource;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(904, 452);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // dbPumpDataSet
+            // 
+            this.dbPumpDataSet.DataSetName = "dbPumpDataSet";
+            this.dbPumpDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // floatTableBindingSource
+            // 
+            this.floatTableBindingSource.DataMember = "FloatTable";
+            this.floatTableBindingSource.DataSource = this.dbPumpDataSet;
+            // 
+            // floatTableTableAdapter
+            // 
+            this.floatTableTableAdapter.ClearBeforeFill = true;
+            // 
+            // dateAndTimeDataGridViewTextBoxColumn
+            // 
+            this.dateAndTimeDataGridViewTextBoxColumn.DataPropertyName = "DateAndTime";
+            this.dateAndTimeDataGridViewTextBoxColumn.HeaderText = "DateAndTime";
+            this.dateAndTimeDataGridViewTextBoxColumn.Name = "dateAndTimeDataGridViewTextBoxColumn";
+            // 
+            // millitmDataGridViewTextBoxColumn
+            // 
+            this.millitmDataGridViewTextBoxColumn.DataPropertyName = "Millitm";
+            this.millitmDataGridViewTextBoxColumn.HeaderText = "Millitm";
+            this.millitmDataGridViewTextBoxColumn.Name = "millitmDataGridViewTextBoxColumn";
+            // 
+            // tagNameDataGridViewTextBoxColumn
+            // 
+            this.tagNameDataGridViewTextBoxColumn.DataPropertyName = "TagName";
+            this.tagNameDataGridViewTextBoxColumn.HeaderText = "TagName";
+            this.tagNameDataGridViewTextBoxColumn.Name = "tagNameDataGridViewTextBoxColumn";
+            // 
+            // valDataGridViewTextBoxColumn
+            // 
+            this.valDataGridViewTextBoxColumn.DataPropertyName = "Val";
+            this.valDataGridViewTextBoxColumn.HeaderText = "Val";
+            this.valDataGridViewTextBoxColumn.Name = "valDataGridViewTextBoxColumn";
+            // 
+            // statusDataGridViewTextBoxColumn
+            // 
+            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
+            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
+            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
+            // 
+            // markerDataGridViewTextBoxColumn
+            // 
+            this.markerDataGridViewTextBoxColumn.DataPropertyName = "Marker";
+            this.markerDataGridViewTextBoxColumn.HeaderText = "Marker";
+            this.markerDataGridViewTextBoxColumn.Name = "markerDataGridViewTextBoxColumn";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox1.Controls.Add(this.DbPathLabel);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(896, 50);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(755, 21);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(58, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "数据库路径:";
+            // 
+            // DbPathLabel
+            // 
+            this.DbPathLabel.AutoSize = true;
+            this.DbPathLabel.Location = new System.Drawing.Point(135, 32);
+            this.DbPathLabel.Name = "DbPathLabel";
+            this.DbPathLabel.Size = new System.Drawing.Size(41, 12);
+            this.DbPathLabel.TabIndex = 2;
+            this.DbPathLabel.Text = "label2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -215,8 +264,14 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dbPumpDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.floatTableBindingSource)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,15 +286,21 @@
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开ToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private PumpContorl pumpContorl1;
-        private PumpContorl pumpContorl2;
-        private PumpContorl pumpContorl3;
-        private PumpContorl pumpContorl4;
-        private PumpContorl pumpContorl5;
-        private PumpContorl pumpContorl6;
-        private PumpContorl pumpContorl7;
-        private PumpContorl pumpContorl8;
-        private PumpContorl pumpContorl9;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private dbPumpDataSet dbPumpDataSet;
+        private System.Windows.Forms.BindingSource floatTableBindingSource;
+        private dbPumpDataSetTableAdapters.FloatTableTableAdapter floatTableTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateAndTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn millitmDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tagNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn markerDataGridViewTextBoxColumn;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label DbPathLabel;
     }
 }
 
