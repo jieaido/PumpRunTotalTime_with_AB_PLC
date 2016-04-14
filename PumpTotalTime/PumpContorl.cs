@@ -11,31 +11,27 @@ namespace PumpTotalTime
 {
     public partial class PumpContorl : UserControl
     {
-        public string PumpName { get; set; }
-        public string PumpId { get; set; }
-
-        public DateTime TotalRunTime { get; set; }  
-        public DateTime LastStartTime { get; set; } 
-
+        public Pump Pump { get; set; }  
 
         public PumpContorl()
         {
             InitializeComponent();
         }
 
-        public PumpContorl(string pumpname, string pumpid, DateTime totalruntime, DateTime laststarttime)
+        public PumpContorl(Pump pump)
         {
-            PumpName = pumpname;
-            PumpId = pumpid;
-            TotalRunTime = totalruntime;
-            LastStartTime = laststarttime;
+            InitializeComponent();
+            Pump = pump;
+            LastStartTime.Text = Pump.PumpTimes.LastOrDefault().StartTime.ToString();
+            TotalRunTime.Text = Pump.TotalRunTime.ToString();
+
         }
         
 
         private void button1_Click(object sender, EventArgs e)
         {
             
-            var s= LastStartTime - TotalRunTime;
+            
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -48,13 +44,18 @@ namespace PumpTotalTime
 
         }
 
-        private void PumpContorl_Load(object sender, EventArgs e)
+       
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
+            Form1 f1=new    Form1();
+            f1.PumpTimes = Pump.PumpTimes;
+            f1.ShowDialog();
 
         }
     }
