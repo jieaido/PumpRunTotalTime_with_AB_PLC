@@ -49,7 +49,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "累计清零";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+          
             // 
             // PumpNameLabel
             // 
@@ -70,7 +70,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+         
             // 
             // label3
             // 
@@ -80,7 +80,7 @@
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 4;
             this.label3.Text = "最后启动时间";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+         
             // 
             // label4
             // 
@@ -90,7 +90,7 @@
             this.label4.Size = new System.Drawing.Size(77, 12);
             this.label4.TabIndex = 5;
             this.label4.Text = "累计运行时间";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+          
             // 
             // LastStartTime
             // 
@@ -122,8 +122,8 @@
             // 
             // PumpContorl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.button2);
             this.Controls.Add(this.TotalRunTime);

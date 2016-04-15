@@ -68,5 +68,41 @@ namespace PumpTotalTime.Properties {
                 return ResourceManager.GetString("Main_button1_Click_请先选择数据库文件_", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 写入成功 的本地化字符串。
+        /// </summary>
+        internal static string Main_button3_Click_写入成功 {
+            get {
+                return ResourceManager.GetString("Main_button3_Click_写入成功", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 分钟 的本地化字符串。
+        /// </summary>
+        internal static string PumpContorl_PumpContorl_分钟 {
+            get {
+                return ResourceManager.GetString("PumpContorl_PumpContorl_分钟", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 天 的本地化字符串。
+        /// </summary>
+        internal static string PumpContorl_PumpContorl_天 {
+            get {
+                return ResourceManager.GetString("PumpContorl_PumpContorl_天", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 小时 的本地化字符串。
+        /// </summary>
+        internal static string PumpContorl_PumpContorl_小时 {
+            get {
+                return ResourceManager.GetString("PumpContorl_PumpContorl_小时", resourceCulture);
+            }
+        }
     }
 }

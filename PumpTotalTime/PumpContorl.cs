@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using PumpTotalTime.Properties;
 
 namespace PumpTotalTime
 {
     public partial class PumpContorl : UserControl
     {
-        public Pump Pump { get; set; }  
-
         public PumpContorl()
         {
             InitializeComponent();
@@ -25,46 +19,24 @@ namespace PumpTotalTime
             var s = Pump.PumpTimes.LastOrDefault();
             LastStartTime.Text = s?.StartTime.ToString() ?? "未找到启动时间";
             PumpNameLabel.Text = Pump.PumpName;
-            TotalRunTime.Text = Pump.TotalRunTime.ToString();
-
-        }
-        
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-            
+            TotalRunTime.Text = Pump.TotalRunTime.Days + Resources.PumpContorl_PumpContorl_天 + Pump.TotalRunTime.Hours +
+                                Resources.PumpContorl_PumpContorl_小时 + Pump.TotalRunTime.Minutes +
+                                Resources.PumpContorl_PumpContorl_分钟;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
+        public Pump Pump { get; set; }
 
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-       
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form1 f1=new    Form1();
+            var f1 = new InfoFrm();
             f1.PumpTimes = Pump.PumpTimes;
-            
-            f1.ShowDialog();
 
+            f1.ShowDialog();
         }
 
         private void PumpContorl_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

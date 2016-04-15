@@ -1,6 +1,6 @@
 ﻿namespace PumpTotalTime
 {
-    partial class Form1
+    partial class InfoFrm
     {
         /// <summary>
         /// Required designer variable.
@@ -80,7 +80,7 @@
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
-            // Form1
+            // InfoFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -90,7 +90,7 @@
             this.Controls.Add(this.dataGridView1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "InfoFrm";
             this.Text = "详情";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PumpTotalTime
 {
     public class ConfigPump
     {
-        public static HashSet<string> PumpList=new HashSet<string>();
+        public static HashSet<string> ReadDbPumpidList = new HashSet<string>();
         public static string DbConstr;
-        public static List<PumpCfg> PumpCfgs=new List<PumpCfg>();
+        public static List<PumpCfg> ReadPumpCfgs = new List<PumpCfg>();
+        public static Dictionary<string, string> MergePumpListCfg = new Dictionary<string, string>();
+    }
+
+    public class PumpCfg
+    {
+        public string Pumpid;
+        public string Pumpname;
     }
 }

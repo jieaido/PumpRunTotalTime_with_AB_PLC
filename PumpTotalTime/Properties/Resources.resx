@@ -117,4 +117,16 @@
   <data name="Main_button1_Click_请先选择数据库文件_" xml:space="preserve">
     <value>请先选择数据库文件!</value>
   </data>
+  <data name="Main_button3_Click_写入成功" xml:space="preserve">
+    <value>写入成功</value>
+  </data>
+  <data name="PumpContorl_PumpContorl_天" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="PumpContorl_PumpContorl_小时" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="PumpContorl_PumpContorl_分钟" xml:space="preserve">
+    <value>分钟</value>
+  </data>
 </root>

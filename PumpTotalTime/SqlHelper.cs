@@ -1,157 +1,30 @@
 ﻿using System;
 using System.Collections;
-using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 using PumpTotalTime;
 
 namespace SharedLibrary
 {
     /// <summary>
-    /// 数据库的通用访问代码 苏飞修改
-    /// 
-    /// 此类为抽象类，
-    /// 不允许实例化，在应用时直接调用即可
+    ///     数据库的通用访问代码 苏飞修改
+    ///     此类为抽象类，
+    ///     不允许实例化，在应用时直接调用即可
     /// </summary>
     public abstract class SqlHelper
     {
         /// <summary>
-        /// 数据库连接字符串
+        ///     数据库连接字符串
         /// </summary>
-
         public static readonly string connectionString =
             ConfigPump.DbConstr;
+
         // Hashtable to store cached parameters
-        private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
-
-        #region//ExecteNonQuery方法
-
-        /// <summary>
-        ///执行一个不需要返回值的OleDbCommand命令，通过指定专用的连接字符串。
-        /// 使用参数数组形式提供参数列表 
-        /// </summary>
-        /// <param name="connectionString">一个有效的数据库连接字符串</param>
-        /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
-        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
-        public static int ExecteNonQuery(string connectionString, CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
-        {
-            OleDbCommand cmd = new OleDbCommand();
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
-            {
-                //通过PrePareCommand方法将参数逐个加入到OleDbCommand的参数集合中
-                PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
-                int val = cmd.ExecuteNonQuery();
-                //清空OleDbCommand中的参数列表
-                cmd.Parameters.Clear();
-                return val;
-            }
-        }
-
-        /// <summary>
-        ///执行一个不需要返回值的OleDbCommand命令，通过指定专用的连接字符串。
-        /// 使用参数数组形式提供参数列表 
-        /// </summary>
-        /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
-        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
-        public static int ExecteNonQuery(CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
-        {
-            return ExecteNonQuery(connectionString, cmdType, cmdText, commandParameters);
-        }
-
-        /// <summary>
-        ///存储过程专用
-        /// </summary>
-        /// <param name="cmdText">存储过程的名字</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
-        public static int ExecteNonQueryProducts(string cmdText, params OleDbParameter[] commandParameters)
-        {
-            return ExecteNonQuery(CommandType.StoredProcedure, cmdText, commandParameters);
-        }
-
-        /// <summary>
-        ///Sql语句专用
-        /// </summary>
-        /// <param name="cmdText">T_Sql语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
-        public static int ExecteNonQueryText(string cmdText, params OleDbParameter[] commandParameters)
-        {
-            return ExecteNonQuery(CommandType.Text, cmdText, commandParameters);
-        }
-
-        #endregion
-        #region//GetTable方法
-
-        /// <summary>
-        /// 执行一条返回结果集的OleDbCommand，通过一个已经存在的数据库连接
-        /// 使用参数数组提供参数
-        /// </summary>
-        /// <param name="connecttionString">一个现有的数据库连接</param>
-        /// <param name="cmdTye">OleDbCommand命令类型</param>
-        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
-        public static DataTableCollection GetTable(string connecttionString, CommandType cmdTye, string cmdText, OleDbParameter[] commandParameters)
-        {
-            OleDbCommand cmd = new OleDbCommand();
-            DataSet ds = new DataSet();
-            using (OleDbConnection conn = new OleDbConnection(connecttionString))
-            {
-                PrepareCommand(cmd, conn, null, cmdTye, cmdText, commandParameters);
-                OleDbDataAdapter adapter = new OleDbDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(ds);
-            }
-            DataTableCollection table = ds.Tables;
-            return table;
-        }
-
-        /// <summary>
-        /// 执行一条返回结果集的OleDbCommand，通过一个已经存在的数据库连接
-        /// 使用参数数组提供参数
-        /// </summary>
-        /// <param name="cmdTye">OleDbCommand命令类型</param>
-        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
-        public static DataTableCollection GetTable(CommandType cmdTye, string cmdText, OleDbParameter[] commandParameters)
-        {
-            return GetTable(cmdTye, cmdText, commandParameters);
-        }
+        private static readonly Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
 
 
         /// <summary>
-        /// 存储过程专用
-        /// </summary>
-        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
-        public static DataTableCollection GetTableProducts(string cmdText, OleDbParameter[] commandParameters)
-        {
-            return GetTable(CommandType.StoredProcedure, cmdText, commandParameters);
-        }
-
-        /// <summary>
-        /// Sql语句专用
-        /// </summary>
-        /// <param name="cmdText"> T-SQL 语句</param>
-        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
-        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
-        public static DataTableCollection GetTableText(string cmdText, OleDbParameter[] commandParameters)
-        {
-            return GetTable(CommandType.Text, cmdText, commandParameters);
-        }
-        #endregion
-
-
-        /// <summary>
-        /// 为执行命令准备参数
+        ///     为执行命令准备参数
         /// </summary>
         /// <param name="cmd">OleDbCommand 命令</param>
         /// <param name="conn">已经存在的数据库连接</param>
@@ -159,7 +32,8 @@ namespace SharedLibrary
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">Command text，T-SQL语句 例如 Select * from Products</param>
         /// <param name="cmdParms">返回带参数的命令</param>
-        private static void PrepareCommand(OleDbCommand cmd, OleDbConnection conn, OleDbTransaction trans, CommandType cmdType, string cmdText, OleDbParameter[] cmdParms)
+        private static void PrepareCommand(OleDbCommand cmd, OleDbConnection conn, OleDbTransaction trans,
+            CommandType cmdType, string cmdText, OleDbParameter[] cmdParms)
         {
             //判断数据库连接状态
             if (conn.State != ConnectionState.Open)
@@ -172,31 +46,32 @@ namespace SharedLibrary
             cmd.CommandType = cmdType;
             if (cmdParms != null)
             {
-                foreach (OleDbParameter parm in cmdParms)
+                foreach (var parm in cmdParms)
                     cmd.Parameters.Add(parm);
             }
         }
 
         /// <summary>
-        /// Execute a OleDbCommand that returns a resultset against the database specified in the connection string 
-        /// using the provided parameters.
+        ///     Execute a OleDbCommand that returns a resultset against the database specified in the connection string
+        ///     using the provided parameters.
         /// </summary>
         /// <param name="connectionString">一个有效的数据库连接字符串</param>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>A OleDbDataReader containing the results</returns>
-        public static OleDbDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static OleDbDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
-            OleDbCommand cmd = new OleDbCommand();
-            OleDbConnection conn = new OleDbConnection(connectionString);
+            var cmd = new OleDbCommand();
+            var conn = new OleDbConnection(connectionString);
             // we use a try/catch here because if the method throws an exception we want to 
             // close the connection throw code, because no datareader will exist, hence the 
             // commandBehaviour.CloseConnection will not work
             try
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
-                OleDbDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 cmd.Parameters.Clear();
                 return rdr;
             }
@@ -206,26 +81,28 @@ namespace SharedLibrary
                 throw;
             }
         }
+
         /// <summary>
-        /// Execute a OleDbCommand that returns a resultset against the database specified in the connection string 
-        /// using the provided parameters.
+        ///     Execute a OleDbCommand that returns a resultset against the database specified in the connection string
+        ///     using the provided parameters.
         /// </summary>
         /// <param name="connectionString">一个有效的数据库连接字符串</param>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>A OleDbDataReader containing the results</returns>
-        public static OleDbDataReader ExecuteReader(CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static OleDbDataReader ExecuteReader(CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
-            OleDbCommand cmd = new OleDbCommand();
-            OleDbConnection conn = new OleDbConnection(connectionString);
+            var cmd = new OleDbCommand();
+            var conn = new OleDbConnection(connectionString);
             // we use a try/catch here because if the method throws an exception we want to 
             // close the connection throw code, because no datareader will exist, hence the 
             // commandBehaviour.CloseConnection will not work
             try
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
-                OleDbDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 cmd.Parameters.Clear();
                 return rdr;
             }
@@ -235,25 +112,215 @@ namespace SharedLibrary
                 throw;
             }
         }
+
+
+        /// <summary>
+        ///     add parameter array to the cache
+        /// </summary>
+        /// <param name="cacheKey">Key to the parameter cache</param>
+        /// <param name="cmdParms">an array of SqlParamters to be cached</param>
+        public static void CacheParameters(string cacheKey, params OleDbParameter[] commandParameters)
+        {
+            parmCache[cacheKey] = commandParameters;
+        }
+
+        /// <summary>
+        ///     Retrieve cached parameters
+        /// </summary>
+        /// <param name="cacheKey">key used to lookup parameters</param>
+        /// <returns>Cached SqlParamters array</returns>
+        public static OleDbParameter[] GetCachedParameters(string cacheKey)
+        {
+            var cachedParms = (OleDbParameter[]) parmCache[cacheKey];
+            if (cachedParms == null)
+                return null;
+            var clonedParms = new OleDbParameter[cachedParms.Length];
+            for (int i = 0, j = cachedParms.Length; i < j; i++)
+                clonedParms[i] = (OleDbParameter) ((ICloneable) cachedParms[i]).Clone();
+            return clonedParms;
+        }
+
+
+        /// <summary>
+        ///     检查是否存在
+        /// </summary>
+        /// <param name="strSql">Sql语句</param>
+        /// <returns>bool结果</returns>
+        public static bool Exists(string strSql)
+        {
+            var cmdresult = Convert.ToInt32(ExecuteScalar(connectionString, CommandType.Text, strSql, null));
+            if (cmdresult == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        ///     检查是否存在
+        /// </summary>
+        /// <param name="strSql">Sql语句</param>
+        /// <param name="cmdParms">参数</param>
+        /// <returns>bool结果</returns>
+        public static bool Exists(string strSql, params OleDbParameter[] cmdParms)
+        {
+            var cmdresult = Convert.ToInt32(ExecuteScalar(connectionString, CommandType.Text, strSql, cmdParms));
+            if (cmdresult == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        #region//ExecteNonQuery方法
+
+        /// <summary>
+        ///     执行一个不需要返回值的OleDbCommand命令，通过指定专用的连接字符串。
+        ///     使用参数数组形式提供参数列表
+        /// </summary>
+        /// <param name="connectionString">一个有效的数据库连接字符串</param>
+        /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
+        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
+        public static int ExecteNonQuery(string connectionString, CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
+        {
+            var cmd = new OleDbCommand();
+            using (var conn = new OleDbConnection(connectionString))
+            {
+                //通过PrePareCommand方法将参数逐个加入到OleDbCommand的参数集合中
+                PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
+                var val = cmd.ExecuteNonQuery();
+                //清空OleDbCommand中的参数列表
+                cmd.Parameters.Clear();
+                return val;
+            }
+        }
+
+        /// <summary>
+        ///     执行一个不需要返回值的OleDbCommand命令，通过指定专用的连接字符串。
+        ///     使用参数数组形式提供参数列表
+        /// </summary>
+        /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
+        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
+        public static int ExecteNonQuery(CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        {
+            return ExecteNonQuery(connectionString, cmdType, cmdText, commandParameters);
+        }
+
+        /// <summary>
+        ///     存储过程专用
+        /// </summary>
+        /// <param name="cmdText">存储过程的名字</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
+        public static int ExecteNonQueryProducts(string cmdText, params OleDbParameter[] commandParameters)
+        {
+            return ExecteNonQuery(CommandType.StoredProcedure, cmdText, commandParameters);
+        }
+
+        /// <summary>
+        ///     Sql语句专用
+        /// </summary>
+        /// <param name="cmdText">T_Sql语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个数值表示此OleDbCommand命令执行后影响的行数</returns>
+        public static int ExecteNonQueryText(string cmdText, params OleDbParameter[] commandParameters)
+        {
+            return ExecteNonQuery(CommandType.Text, cmdText, commandParameters);
+        }
+
+        #endregion
+
+        #region//GetTable方法
+
+        /// <summary>
+        ///     执行一条返回结果集的OleDbCommand，通过一个已经存在的数据库连接
+        ///     使用参数数组提供参数
+        /// </summary>
+        /// <param name="connecttionString">一个现有的数据库连接</param>
+        /// <param name="cmdTye">OleDbCommand命令类型</param>
+        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
+        public static DataTableCollection GetTable(string connecttionString, CommandType cmdTye, string cmdText,
+            OleDbParameter[] commandParameters)
+        {
+            var cmd = new OleDbCommand();
+            var ds = new DataSet();
+            using (var conn = new OleDbConnection(connecttionString))
+            {
+                PrepareCommand(cmd, conn, null, cmdTye, cmdText, commandParameters);
+                var adapter = new OleDbDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(ds);
+            }
+            var table = ds.Tables;
+            return table;
+        }
+
+        /// <summary>
+        ///     执行一条返回结果集的OleDbCommand，通过一个已经存在的数据库连接
+        ///     使用参数数组提供参数
+        /// </summary>
+        /// <param name="cmdTye">OleDbCommand命令类型</param>
+        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
+        public static DataTableCollection GetTable(CommandType cmdTye, string cmdText,
+            OleDbParameter[] commandParameters)
+        {
+            return GetTable(cmdTye, cmdText, commandParameters);
+        }
+
+
+        /// <summary>
+        ///     存储过程专用
+        /// </summary>
+        /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
+        public static DataTableCollection GetTableProducts(string cmdText, OleDbParameter[] commandParameters)
+        {
+            return GetTable(CommandType.StoredProcedure, cmdText, commandParameters);
+        }
+
+        /// <summary>
+        ///     Sql语句专用
+        /// </summary>
+        /// <param name="cmdText"> T-SQL 语句</param>
+        /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
+        /// <returns>返回一个表集合(DataTableCollection)表示查询得到的数据集</returns>
+        public static DataTableCollection GetTableText(string cmdText, OleDbParameter[] commandParameters)
+        {
+            return GetTable(CommandType.Text, cmdText, commandParameters);
+        }
+
+        #endregion
+
         #region//ExecuteDataSet方法
 
         /// <summary>
-        /// return a dataset
+        ///     return a dataset
         /// </summary>
         /// <param name="connectionString">一个有效的数据库连接字符串</param>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>return a dataset</returns>
-        public static DataSet ExecuteDataSet(string connectionString, CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static DataSet ExecuteDataSet(string connectionString, CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
-            OleDbConnection conn = new OleDbConnection(connectionString);
-            OleDbCommand cmd = new OleDbCommand();
+            var conn = new OleDbConnection(connectionString);
+            var cmd = new OleDbCommand();
             try
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
-                OleDbDataAdapter da = new OleDbDataAdapter();
-                DataSet ds = new DataSet();
+                var da = new OleDbDataAdapter();
+                var ds = new DataSet();
                 da.SelectCommand = cmd;
                 da.Fill(ds);
                 return ds;
@@ -267,19 +334,20 @@ namespace SharedLibrary
 
 
         /// <summary>
-        /// 返回一个DataSet
+        ///     返回一个DataSet
         /// </summary>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>return a dataset</returns>
-        public static DataSet ExecuteDataSet(CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static DataSet ExecuteDataSet(CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
             return ExecuteDataSet(connectionString, cmdType, cmdText, commandParameters);
         }
 
         /// <summary>
-        /// 返回一个DataSet
+        ///     返回一个DataSet
         /// </summary>
         /// <param name="cmdText">存储过程的名字</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
@@ -290,9 +358,8 @@ namespace SharedLibrary
         }
 
         /// <summary>
-        /// 返回一个DataSet
+        ///     返回一个DataSet
         /// </summary>
-
         /// <param name="cmdText">T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>return a dataset</returns>
@@ -302,18 +369,19 @@ namespace SharedLibrary
         }
 
 
-        public static DataView ExecuteDataSet(string connectionString, string sortExpression, string direction, CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static DataView ExecuteDataSet(string connectionString, string sortExpression, string direction,
+            CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
         {
-            OleDbConnection conn = new OleDbConnection(connectionString);
-            OleDbCommand cmd = new OleDbCommand();
+            var conn = new OleDbConnection(connectionString);
+            var cmd = new OleDbCommand();
             try
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
-                OleDbDataAdapter da = new OleDbDataAdapter();
-                DataSet ds = new DataSet();
+                var da = new OleDbDataAdapter();
+                var ds = new DataSet();
                 da.SelectCommand = cmd;
                 da.Fill(ds);
-                DataView dv = ds.Tables[0].DefaultView;
+                var dv = ds.Tables[0].DefaultView;
                 dv.Sort = sortExpression + " " + direction;
                 return dv;
             }
@@ -323,160 +391,99 @@ namespace SharedLibrary
                 throw;
             }
         }
-        #endregion
 
+        #endregion
 
         #region // ExecuteScalar方法
 
-
         /// <summary>
-        /// 返回第一行的第一列
+        ///     返回第一行的第一列
         /// </summary>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>返回一个对象</returns>
-        public static object ExecuteScalar(CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static object ExecuteScalar(CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
-            return ExecuteScalar(SqlHelper.connectionString, cmdType, cmdText, commandParameters);
+            return ExecuteScalar(connectionString, cmdType, cmdText, commandParameters);
         }
 
         /// <summary>
-        /// 返回第一行的第一列存储过程专用
+        ///     返回第一行的第一列存储过程专用
         /// </summary>
         /// <param name="cmdText">存储过程的名字</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>返回一个对象</returns>
         public static object ExecuteScalarProducts(string cmdText, params OleDbParameter[] commandParameters)
         {
-            return ExecuteScalar(SqlHelper.connectionString, CommandType.StoredProcedure, cmdText, commandParameters);
+            return ExecuteScalar(connectionString, CommandType.StoredProcedure, cmdText, commandParameters);
         }
 
         /// <summary>
-        /// 返回第一行的第一列Sql语句专用
+        ///     返回第一行的第一列Sql语句专用
         /// </summary>
         /// <param name="cmdText">者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>返回一个对象</returns>
         public static object ExecuteScalarText(string cmdText, params OleDbParameter[] commandParameters)
         {
-            return ExecuteScalar(SqlHelper.connectionString, CommandType.Text, cmdText, commandParameters);
+            return ExecuteScalar(connectionString, CommandType.Text, cmdText, commandParameters);
         }
 
         /// <summary>
-        /// Execute a OleDbCommand that returns the first column of the first record against the database specified in the connection string 
-        /// using the provided parameters.
+        ///     Execute a OleDbCommand that returns the first column of the first record against the database specified in the
+        ///     connection string
+        ///     using the provided parameters.
         /// </summary>
         /// <remarks>
-        /// e.g.:  
-        ///  Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new OleDbParameter("@prodid", 24));
+        ///     e.g.:
+        ///     Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new OleDbParameter("@prodid",
+        ///     24));
         /// </remarks>
         /// <param name="connectionString">一个有效的数据库连接字符串</param>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>An object that should be converted to the expected type using Convert.To{Type}</returns>
-        public static object ExecuteScalar(string connectionString, CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static object ExecuteScalar(string connectionString, CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
-            OleDbCommand cmd = new OleDbCommand();
+            var cmd = new OleDbCommand();
 
-            using (OleDbConnection connection = new OleDbConnection(connectionString))
+            using (var connection = new OleDbConnection(connectionString))
             {
                 PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
-                object val = cmd.ExecuteScalar();
+                var val = cmd.ExecuteScalar();
                 cmd.Parameters.Clear();
                 return val;
             }
         }
 
         /// <summary>
-        /// Execute a OleDbCommand that returns the first column of the first record against an existing database connection 
-        /// using the provided parameters.
+        ///     Execute a OleDbCommand that returns the first column of the first record against an existing database connection
+        ///     using the provided parameters.
         /// </summary>
         /// <remarks>
-        /// e.g.:  
-        ///  Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new OleDbParameter("@prodid", 24));
+        ///     e.g.:
+        ///     Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new OleDbParameter("@prodid",
+        ///     24));
         /// </remarks>
         /// <param name="connectionString">一个有效的数据库连接字符串</param>
         /// <param name="cmdType">OleDbCommand命令类型 (存储过程， T-SQL语句， 等等。)</param>
         /// <param name="cmdText">存储过程的名字或者 T-SQL 语句</param>
         /// <param name="commandParameters">以数组形式提供OleDbCommand命令中用到的参数列表</param>
         /// <returns>An object that should be converted to the expected type using Convert.To{Type}</returns>
-        public static object ExecuteScalar(OleDbConnection connection, CommandType cmdType, string cmdText, params OleDbParameter[] commandParameters)
+        public static object ExecuteScalar(OleDbConnection connection, CommandType cmdType, string cmdText,
+            params OleDbParameter[] commandParameters)
         {
-            OleDbCommand cmd = new OleDbCommand();
+            var cmd = new OleDbCommand();
             PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
-            object val = cmd.ExecuteScalar();
+            var val = cmd.ExecuteScalar();
             cmd.Parameters.Clear();
             return val;
         }
 
         #endregion
-
-
-        /// <summary>
-        /// add parameter array to the cache
-        /// </summary>
-        /// <param name="cacheKey">Key to the parameter cache</param>
-        /// <param name="cmdParms">an array of SqlParamters to be cached</param>
-        public static void CacheParameters(string cacheKey, params OleDbParameter[] commandParameters)
-        {
-            parmCache[cacheKey] = commandParameters;
-        }
-
-        /// <summary>
-        /// Retrieve cached parameters
-        /// </summary>
-        /// <param name="cacheKey">key used to lookup parameters</param>
-        /// <returns>Cached SqlParamters array</returns>
-        public static OleDbParameter[] GetCachedParameters(string cacheKey)
-        {
-            OleDbParameter[] cachedParms = (OleDbParameter[])parmCache[cacheKey];
-            if (cachedParms == null)
-                return null;
-            OleDbParameter[] clonedParms = new OleDbParameter[cachedParms.Length];
-            for (int i = 0, j = cachedParms.Length; i < j; i++)
-                clonedParms[i] = (OleDbParameter)((ICloneable)cachedParms[i]).Clone();
-            return clonedParms;
-        }
-
-
-        /// <summary>
-        /// 检查是否存在
-        /// </summary>
-        /// <param name="strSql">Sql语句</param>
-        /// <returns>bool结果</returns>
-        public static bool Exists(string strSql)
-        {
-            int cmdresult = Convert.ToInt32(ExecuteScalar(connectionString, CommandType.Text, strSql, null));
-            if (cmdresult == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// 检查是否存在
-        /// </summary>
-        /// <param name="strSql">Sql语句</param>
-        /// <param name="cmdParms">参数</param>
-        /// <returns>bool结果</returns>
-        public static bool Exists(string strSql, params OleDbParameter[] cmdParms)
-        {
-            int cmdresult = Convert.ToInt32(ExecuteScalar(connectionString, CommandType.Text, strSql, cmdParms));
-            if (cmdresult == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
     }
-
 }
