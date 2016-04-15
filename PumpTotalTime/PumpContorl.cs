@@ -22,7 +22,9 @@ namespace PumpTotalTime
         {
             InitializeComponent();
             Pump = pump;
-            LastStartTime.Text = Pump.PumpTimes.LastOrDefault().StartTime.ToString();
+            var s = Pump.PumpTimes.LastOrDefault();
+            LastStartTime.Text = s?.StartTime.ToString() ?? "未找到启动时间";
+            PumpNameLabel.Text = Pump.PumpName;
             TotalRunTime.Text = Pump.TotalRunTime.ToString();
 
         }
@@ -55,7 +57,13 @@ namespace PumpTotalTime
         {
             Form1 f1=new    Form1();
             f1.PumpTimes = Pump.PumpTimes;
+            
             f1.ShowDialog();
+
+        }
+
+        private void PumpContorl_Load(object sender, EventArgs e)
+        {
 
         }
     }
