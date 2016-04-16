@@ -10,6 +10,10 @@ namespace PumpTotalTime
 {
     public static class PHelper
     {
+
+        /// <summary>
+        /// 获取所有Pump的Id信息并比对配置文件的信息
+        /// </summary>
         public static void GetAllPumpId()
         {
             using (var dbc = new OleDbConnection(ConfigPump.DbConstr))
@@ -32,7 +36,11 @@ namespace PumpTotalTime
             ConfigPump.ReadPumpCfgs = GetAlreadyConfig();
             MergePumpList();
         }
-
+        /// <summary>
+        /// 获取电机的运行信息
+        /// </summary>
+        /// <param name="pumpid">电机的id</param>
+        /// <returns>Pump信息</returns>
         public static Pump GetPumpInfo(string pumpid)
 
         {
@@ -104,7 +112,10 @@ namespace PumpTotalTime
 
             return pump;
         }
-
+        /// <summary>
+        /// 读取配置文件
+        /// </summary>
+        /// <returns>配置文件</returns>
         private static List<PumpCfg> GetAlreadyConfig()
         {
             try
@@ -126,9 +137,12 @@ namespace PumpTotalTime
                 throw;
             }
         }
-
+        /// <summary>
+        /// 合并读取的信息和配置文件上的信息
+        /// </summary>
         private static void MergePumpList()
         {
+            
             if (ConfigPump.ReadPumpCfgs == null)
             {
                 foreach (var pumpid in ConfigPump.ReadDbPumpidList)
@@ -152,5 +166,7 @@ namespace PumpTotalTime
                 }
             }
         }
+
+       
     }
 }

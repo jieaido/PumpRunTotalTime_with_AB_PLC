@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using PumpTotalTime.Properties;
+using PumpTotalTime.Unit;
 
 namespace PumpTotalTime
 {
@@ -83,6 +84,7 @@ namespace PumpTotalTime
 
         private void CalcBtn(object sender, EventArgs e)
         {
+            ConfigPump.Pumpinfos.Clear();//计算前先把内存中的PumpInfos全部清空,这里不存在pumpinfos为null的情况
             if (ConfigPump.DbConstr == null)
             {
                 MessageBox.Show(Resources.Main_button1_Click_请先选择数据库文件_);
@@ -92,11 +94,17 @@ namespace PumpTotalTime
             flowLayoutPanel1.Controls.Clear();
             foreach (var pumpid in ConfigPump.ReadDbPumpidList)
             {
-                var ss = PHelper.GetPumpInfo(pumpid);
-                var pc = new PumpContorl(ss);
+                var pump = PHelper.GetPumpInfo(pumpid);
+                ConfigPump.Pumpinfos.Add(pump);
+                var pc = new PumpContorl(pump);
 
                 flowLayoutPanel1.Controls.Add(pc);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ExcelHelper.fasf();
         }
     }
 }
