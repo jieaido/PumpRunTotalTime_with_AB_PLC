@@ -141,7 +141,6 @@
             // groupBox1
             // 
             this.groupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.IpAddress;
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.CalcPumpBtn);
             this.groupBox1.Controls.Add(this.DbPathLabel);
             this.groupBox1.Controls.Add(this.label1);
@@ -188,6 +187,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.dataGridView1);
@@ -270,13 +270,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(423, 22);
+            this.button1.Location = new System.Drawing.Point(693, 54);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
+            this.button1.Size = new System.Drawing.Size(125, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "导出成Excel";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Main
             // 
