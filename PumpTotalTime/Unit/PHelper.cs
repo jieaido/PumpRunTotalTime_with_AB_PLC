@@ -47,44 +47,47 @@ namespace PumpTotalTime
             var pumpTimes = new List<PumpTime>();
             var firstdt = new DateTime();
             var lastRunDateTime = new DateTime();
-            var firstStart = true;
-            var firststop = true;
+          
+            var firstCalc1 = true;
             var ts = new TimeSpan();
 
-            var cmdtxt = "select DateAndTime,Val from FloatTable where TagName=?";
+            const string cmdtxt = "select DateAndTime,Val from FloatTable where TagName=? order by DateAndTime ";
             var reader = SqlHelper.ExecuteReader(CommandType.Text, cmdtxt, new OleDbParameter("p1", pumpid));
             var pt = new PumpTime();
             while (reader.Read())
             {
                 if (reader["Val"].ToString() == "1")
                 {
-                    if (firstStart)
+                    if (firstCalc1)
                     {
                         pt.StartTime = DateTime.Parse(reader["DateAndTime"].ToString());
-                        firstStart = false;
+                  
                         firstdt = DateTime.Parse(reader["DateAndTime"].ToString());
+                        firstCalc1 = false;
+
                     }
                     else
                     {
                         ts += DateTime.Parse(reader["DateAndTime"].ToString()) - firstdt;
                         firstdt = DateTime.Parse(reader["DateAndTime"].ToString());
                     }
-                    lastRunDateTime = DateTime.Parse(reader["DateAndTime"].ToString());
-                    firststop = true;
+                   lastRunDateTime = DateTime.Parse(reader["DateAndTime"].ToString());//记录最新的为1的时间
+                   
                 }
                 else
                 {
-                    if (firststop)
-                    {
+                    
+
+                   
                         if (pt.StartTime != DateTime.MinValue)
                         {
                             pt.StopTime = DateTime.Parse(reader["DateAndTime"].ToString());
                             pumpTimes.Add(pt);
                             pt = new PumpTime();
-                            firststop = false;
+                            firstCalc1 = true;//既然找到了0,firstcalc1就该置位,代表下一次找到的1就是第一个1
                         }
-                    }
-                    firstStart = true;
+                    
+                    
                 }
             }
             if (pt.StopTime == DateTime.MinValue && pt.StartTime != DateTime.MinValue)
