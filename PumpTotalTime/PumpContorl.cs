@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PumpTotalTime.Properties;
 
+
 namespace PumpTotalTime
 {
     public partial class PumpContorl : UserControl
@@ -29,14 +30,19 @@ namespace PumpTotalTime
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var f1 = new InfoFrm();
-            f1.PumpTimes = Pump.PumpTimes;
-
+            var f1 = new InfoFrm {PumpTimes = Pump.PumpTimes};
             f1.ShowDialog();
         }
 
         private void PumpContorl_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void JiaYouBtn_Click(object sender, EventArgs e)
+        {
+             MessageBox.Show("ss");
+            string cmdtxt = "insert into floattable values";
         }
     }
 }

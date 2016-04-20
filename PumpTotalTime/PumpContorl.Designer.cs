@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PumpContorl));
-            this.button1 = new System.Windows.Forms.Button();
+            this.JiaYouBtn = new System.Windows.Forms.Button();
             this.PumpNameLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,16 +40,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // JiaYouBtn
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(31, 56);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(62, 26);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "累计清零";
-            this.button1.UseVisualStyleBackColor = true;
-          
+            this.JiaYouBtn.Enabled = false;
+            this.JiaYouBtn.Location = new System.Drawing.Point(31, 56);
+            this.JiaYouBtn.Name = "JiaYouBtn";
+            this.JiaYouBtn.Size = new System.Drawing.Size(62, 26);
+            this.JiaYouBtn.TabIndex = 0;
+            this.JiaYouBtn.Text = "电机加油";
+            this.JiaYouBtn.UseVisualStyleBackColor = true;
+            this.JiaYouBtn.Click += new System.EventHandler(this.JiaYouBtn_Click);
             // 
             // PumpNameLabel
             // 
@@ -70,7 +70,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-         
             // 
             // label3
             // 
@@ -80,7 +79,6 @@
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 4;
             this.label3.Text = "最后启动时间";
-         
             // 
             // label4
             // 
@@ -90,7 +88,6 @@
             this.label4.Size = new System.Drawing.Size(77, 12);
             this.label4.TabIndex = 5;
             this.label4.Text = "累计运行时间";
-          
             // 
             // LastStartTime
             // 
@@ -132,7 +129,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.PumpNameLabel);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.JiaYouBtn);
             this.Name = "PumpContorl";
             this.Size = new System.Drawing.Size(270, 192);
             this.Load += new System.EventHandler(this.PumpContorl_Load);
@@ -144,7 +141,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button JiaYouBtn;
         private System.Windows.Forms.Label PumpNameLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label3;
